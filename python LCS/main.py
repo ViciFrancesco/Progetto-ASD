@@ -1,14 +1,9 @@
-from longest_common_sequence import *
+from performance_test import LCSTester
 
 def main():
-    X = "AGGTAB"
-    Y = "GXTXAYB"
-    memo={}
-
-    print("Versione ricorsiva ->" , recursive_LCS(X, Y, len(X), len(Y)))
-    print("Versione forza bruta ->" , brute_force_LCS(X, Y))
-    print("Versione memoization ->" , memoization_LCS(X, Y, len(X), len(Y), memo))
-    print("Versione bottom-up ->" , bottom_up_LCS(X, Y))
+    tester = LCSTester(sizes=[5, 10, 15, 20, 25, 30, 40, 50])
+    tester.run_test()
+    tester.plot_results()
 
 if __name__ == "__main__":
     main()
