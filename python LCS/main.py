@@ -1,7 +1,11 @@
 from performance_test import LCSTester
 
 def main():
-    tester = LCSTester(sizes=[5, 10, 15, 20, 25, 30, 40, 50])
+    sizes =[]
+    for i in range(501):
+        sizes.append(i)
+
+    tester = LCSTester(sizes)
     tester.run_test()
     tester.plot_results()
 
