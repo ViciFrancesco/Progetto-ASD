@@ -1,11 +1,11 @@
 from performance_test import LCSTester
 import time
 
-nr = 1400 + 1
+nr = 500
 
 def main():
     sizes =[]
-    for i in range(nr):
+    for i in range(nr+1):
         sizes.append(i)
 
     tester = LCSTester(sizes)
