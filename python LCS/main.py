@@ -1,6 +1,5 @@
 from algorithms.recursive_LCS import RecursiveLCS
 from test_algorithm import TestLCS
-from test_algorithm import TestLCS
 from enum import Enum
 
 class LCS(Enum):
@@ -17,6 +16,7 @@ def main():
 
     test = TestLCS(scale, maxStringLenght, selectedAlgorithm)
     test.test_algorithm()
+    test.plot_results()
 
     return True
 

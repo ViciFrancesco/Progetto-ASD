@@ -12,7 +12,7 @@ class RecursiveLCS:
             "Expected Times Function" : []}
         
         # Definizione della massima lunghezza delle stringhe in input
-        self.maxSizeAllowed = 15
+        self.maxSizeAllowed = 20
 
         # Fattore di scala uguale per tutti gli algoritmi
         self.scalingFactor = scalingFactor
