@@ -72,6 +72,4 @@ class TestLCS:
         plt.show()
 
         plt.show()
-
-
     
