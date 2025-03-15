@@ -1,14 +1,7 @@
-from algorithms.recursive_LCS import RecursiveLCS
-from algorithms.brute_force_LCS import BruteForceLCS
 from test_algorithm import TestLCS
-from enum import Enum
 import time
 
-class LCS(Enum):
-    Recursive = RecursiveLCS
-    BruteForce = BruteForceLCS
-    Memoization = None
-    BottomUp = None  
+from LCS_types import LCS
 
 #==================================================================================================
 #                                  Parametri del test
@@ -16,12 +9,17 @@ class LCS(Enum):
     #
     # PARAM. 1) Lunghezza massima delle stringhe su cui effettuare il test
     #
-maxStringLenght = 500
+maxStringLenght = 5000
 
     #
     # PARAM. 2) Algoritmo su cui si desidera eseguire il test
     #
-selectedAlgorithm = LCS.BruteForce
+selectedAlgorithm = LCS.Memoization
+
+    #
+    # PARAM. 3) Variabile che consente di stampare il dizionario per la memoization
+    #
+printMemoDictionary = False
 
 #==================================================================================================
 #                                   Main del programma
@@ -31,7 +29,7 @@ def main():
     scale = TestLCS.GET_scaling_factor()
 
     # Inizializzazione del test 
-    test = TestLCS(scale, maxStringLenght, selectedAlgorithm.value)
+    test = TestLCS(scale, maxStringLenght, selectedAlgorithm.value, printMemoDictionary)
     
     # Ottenimento orario di partenza del test
     startTest = time.time()
