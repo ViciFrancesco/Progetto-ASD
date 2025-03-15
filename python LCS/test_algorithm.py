@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from algorithms.recursive_LCS import RecursiveLCS
+from algorithms.brute_force_LCS import BruteForceLCS
 
 class TestLCS:
     ####################################################################################################
@@ -41,7 +42,7 @@ class TestLCS:
         # tempo_per_istruzione = (end - start)
         # print(f"Tempo medio per istruzione: {tempo_per_istruzione:.10f} secondi")
         # return tempo_per_istruzione
-        return 0.001
+        return 0.0001
     
     def plot_results(self):
         # Ottieni le chiavi dinamicamente
