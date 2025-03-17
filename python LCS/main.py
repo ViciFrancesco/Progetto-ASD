@@ -9,12 +9,12 @@ from LCS_types import LCS
     #
     # PARAM. 1) Lunghezza massima delle stringhe su cui effettuare il test
     #
-maxStringLenght = 5000
+maxStringLenght = 600
 
     #
     # PARAM. 2) Algoritmo su cui si desidera eseguire il test
     #
-selectedAlgorithm = LCS.Memoization
+selectedAlgorithm = LCS.BruteForce
 
     #
     # PARAM. 3) Variabile che consente di stampare il dizionario per la memoization

@@ -56,7 +56,7 @@ class TestLCS:
         # tempo_per_istruzione = (end - start)
         # print(f"Tempo medio per istruzione: {tempo_per_istruzione:.10f} secondi")
         # return tempo_per_istruzione
-        return 0.0000001
+        return 1e-6
     
     # Stampa il grafico dei risultati dell'algoritmo testato
     def plot_results(self):

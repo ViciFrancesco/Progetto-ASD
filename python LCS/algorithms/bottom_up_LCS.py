@@ -1,42 +1,38 @@
 import time
 import numpy as np
+from itertools import combinations
 
-class MemoizationLCS:
+class BottomUpLCS:
     #==================================================================================================
     #                                  Costruttore della classe 
     #==================================================================================================
     def __init__(self, scalingFactor):
         # Matrice dei risultati
         self.results = {
-            "Memoization LCS": [],
+            "Bottom-Up LCS": [],
             "Expected Times Function" : []}
         
         # Massima lunghezza delle stringhe in input
-        self.maxSizeAllowed = 900
+        self.maxSizeAllowed = 1000
 
         # Fattore di scala (uguale per tutti gli algoritmi)
         self.scalingFactor = scalingFactor
-
-        # Dizionario per la memoization
-        self.memo = {} 
         
     #==================================================================================================
     #                                       Algoritmo principale 
     #==================================================================================================   
-    def memoization_LCS(self, X, Y, m, n):
-        if m == 0 or n == 0:
-            return 0
-        if (m, n) in self.memo:
-            return self.memo[(m, n)]
-        
-        if X[m - 1] == Y[n - 1]:
-            self.memo[(m, n)] = 1 + self.memoization_LCS(X, Y, m - 1, n - 1)
-        else:
-            self.memo[(m, n)] = max(
-                self.memoization_LCS(X, Y, m, n - 1),
-                self.memoization_LCS(X, Y, m - 1, n)
-            )
-        return self.memo[(m, n)]
+    def bottom_up_LCS(self, X, Y):
+        m, n = len(X), len(Y)
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if X[i - 1] == Y[j - 1]:
+                    dp[i][j] = 1 + dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+        return dp[m][n]
 
     #==================================================================================================
     #                                     Funzioni di environment
@@ -46,9 +42,9 @@ class MemoizationLCS:
     def execute(self, X, Y):
         if(len(X) <= self.maxSizeAllowed and len(X) <= self.maxSizeAllowed):
             start = time.time()
-            self.memoization_LCS(X, Y, len(X), len(Y))
+            self.bottom_up_LCS(X, Y)
             end=time.time()
-            self.results["Memoization LCS"].append(end-start)
+            self.results["Bottom-Up LCS"].append(end-start)
             self.set_expected_time(len(X))
         else:
             self.set_no_results()
@@ -59,11 +55,5 @@ class MemoizationLCS:
 
     # Imposta a NaN i tempi di esecuzione dell'algoritmo e del suo andamento
     def set_no_results(self):
-        self.results["Memoization LCS"].append(np.nan)
+        self.results["Bottom-Up LCS"].append(np.nan)
         self.results["Expected Times Function"].append(np.nan)
-
-    # Stampa il dizionario per la memoization
-    def print_memo(self):
-        print("Memoization Table:")
-        for key, value in sorted(self.memo.items()):  
-            print(f"LCS({key[0]}, {key[1]}) = {value}")
