@@ -1,32 +1,10 @@
-\documentclass{article}
-% Pacchetti opzionali
-\usepackage[utf8]{inputenc} % Supporto per caratteri UTF-8
-\usepackage{lipsum} % Testo segnaposto
+\include{assets/style.tex}
 
 \begin{document}
 
-	
-	
-	\title{Titolo del Documento}
-	\author{Vici Francesco}
-	\date{\today} % Data automatica
+	\input{paragraphs/0 - Title page}
 
-	\maketitle
+	\input{paragraphs/1 - Tecnical Introduction}
 
-	\section{Introduzione tecnica}
-	Scelta del progetto e specifiche hardware \\
-
-	\section{Descrizione del problema}
-	Modellizzazione del problema e principali aspetti teorici \\
-	Principali assunti (costi attesi algoritmi) \\
-
-	\section{Documentazione del codice}
-	Descrizione dell' ambiente e della struttura utilizzata \\
-	Schema UML delle classi utilizzate \\
-	Descrizione dei metodi implementati \\ 
-	Limitazioni del compilatore (memoLCS) \\
-
-	\section{Descrizione ed analisi dei test condotti}
-	
-	
+		
 \end{document}

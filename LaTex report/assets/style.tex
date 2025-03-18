@@ -1,0 +1,69 @@
+% Classe del documento
+\documentclass{article}
+
+
+\usepackage{listings}
+
+\usepackage{amsfonts} 			%used for \mathbb{} -> numerical sets
+\usepackage{amsmath}			%used for \text{} inside math equations
+\usepackage{enumitem}
+\usepackage{bm}					%used for bold math expressions
+\usepackage{calc}				%used for algebric operations inside \newenvironment
+\usepackage{graphicx}			%used for custom image command
+\usepackage{relsize}
+
+
+
+\graphicspath{{assets/images/}}
+
+
+
+\newenvironment{align-c}
+{
+	\par
+	\centering
+	\setlength{\parskip}{10pt} % Rimuovi spaziatura verticale
+	\noindent
+	\Large       
+}{
+	\par
+	\vspace{8pt}
+	\normalsize
+}
+
+
+
+\newenvironment{desc-std}
+{
+	\begin{description}[topsep=0pt,itemsep=0pt,partopsep=0pt, parsep=0pt]
+	}{
+	\end{description}
+}
+
+
+
+\newenvironment{desc}[1]
+{
+	\setlist[description,1]{leftmargin=2em + (2em * #1),labelindent=0em + (2em * #1)}
+	\begin{description}[topsep=0pt,itemsep=0pt,partopsep=0pt, parsep=0pt]
+	}{
+	\end{description}
+}
+
+
+
+\newcommand{\setWatermark}[1]{% Imposta il testo del watermark
+	\usepackage{draftwatermark}
+	\SetWatermarkText{#1} 
+	\SetWatermarkScale{4}
+	\SetWatermarkAngle{60} 
+}
+
+\newcommand{\img}[1]{
+	\vspace{1.5em} 
+	\centering\includegraphics[width=1\columnwidth]{#1}
+	\vspace{1.5em} 
+}
+
+
+%\pagestyle{plain}
