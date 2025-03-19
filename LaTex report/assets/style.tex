@@ -2,68 +2,132 @@
 \documentclass{article}
 
 
+
+% Pacchetto per generare testo segnaposto (Lorem Ipsum)
+\usepackage{lipsum}
+
+% Pacchetto per evidenziare codice sorgente
 \usepackage{listings}
 
-\usepackage{amsfonts} 			%used for \mathbb{} -> numerical sets
-\usepackage{amsmath}			%used for \text{} inside math equations
+% Pacchetti per la matematica avanzata (font e simboli)
+\usepackage{amsfonts}  % Font matematici aggiuntivi
+\usepackage{amsmath}   % Ambienti ed estensioni per la matematica
+
+% Pacchetto per personalizzare gli elenchi numerati e puntati
 \usepackage{enumitem}
-\usepackage{bm}					%used for bold math expressions
-\usepackage{calc}				%used for algebric operations inside \newenvironment
-\usepackage{graphicx}			%used for custom image command
+
+% Pacchetto per il grassetto nei simboli matematici
+\usepackage{bm}
+
+% Pacchetto per operazioni matematiche su lunghezze e dimensioni
+\usepackage{calc}
+
+% Pacchetto per gestire immagini e grafica
+\usepackage{graphicx}
+
+% Pacchetto per ridimensionare simboli matematici
 \usepackage{relsize}
 
+% Pacchetti per gestire colori e creare box colorati
+\usepackage{xcolor}     % Definizione e uso di colori personalizzati
+\usepackage{tcolorbox}  % Creazione di box colorati per evidenziare contenuti
 
 
+
+% Definizione del percorso alla cartella immagini
 \graphicspath{{assets/images/}}
 
 
 
-\newenvironment{align-c}
+\newenvironment{CENTER}
 {
 	\par
 	\centering
-	\setlength{\parskip}{10pt} % Rimuovi spaziatura verticale
+	\setlength{\parskip}{10pt} % Imposta la spaziatura tra paragrafi
 	\noindent
-	\Large       
-}{
+	%\Large  % Testo di dimensione grande
+}
+{
 	\par
-	\vspace{8pt}
-	\normalsize
+	\vspace{8pt} % Aggiunge spazio alla fine dell'ambiente
+	\normalsize  % Ripristina la dimensione normale del testo
 }
 
-
-
-\newenvironment{desc-std}
+% Ambiente personalizzato per una lista descrittiva senza spaziature aggiuntive
+\newenvironment{DESCRIPTION}
 {
-	\begin{description}[topsep=0pt,itemsep=0pt,partopsep=0pt, parsep=0pt]
-	}{
+	\begin{description}[topsep=0pt, itemsep=0pt, partopsep=0pt, parsep=0pt]
+}
+{
 	\end{description}
 }
 
-
-
-\newenvironment{desc}[1]
+% Variante di DESC con parametro per la gestione del margine sinistro
+\newenvironment{DESC}[1]
 {
-	\setlist[description,1]{leftmargin=2em + (2em * #1),labelindent=0em + (2em * #1)}
-	\begin{description}[topsep=0pt,itemsep=0pt,partopsep=0pt, parsep=0pt]
-	}{
+	\setlist[description,1]{leftmargin=2em + (2em * #1), labelindent=0em + (2em * #1)}
+	\begin{description}[topsep=0pt, itemsep=0pt, partopsep=0pt, parsep=0pt]
+}
+{
 	\end{description}
 }
 
-
-
-\newcommand{\setWatermark}[1]{% Imposta il testo del watermark
-	\usepackage{draftwatermark}
-	\SetWatermarkText{#1} 
-	\SetWatermarkScale{4}
-	\SetWatermarkAngle{60} 
+% Ambiente per una coppia di minipage con testo allineato in alto a sinistra
+\newenvironment{MINIBOX}
+{
+	\begin{minipage}[t]{0.45\textwidth}
+}
+{
+	\end{minipage}
 }
 
-\newcommand{\img}[1]{
-	\vspace{1.5em} 
-	\centering\includegraphics[width=1\columnwidth]{#1}
-	\vspace{1.5em} 
+\newenvironment{MINIBOX-RIGHT}
+{
+	\begin{minipage}[t]{0.45\textwidth}
+		\begin{flushright}
+}
+{
+		\end{flushright}
+	\end{minipage}
 }
 
+% Definizione dell'ambiente con bordo e sfondo personalizzati
+\newtcolorbox{GRAYBOX}{
+	colframe=gray,    % Bordo grigio scuro
+	colback=gray!10, % Sfondo grigio chiaro
+	boxrule=1pt,      % Spessore del bordo
+	arc=5pt,          % Arrotondamento angoli
+	left=5pt, right=5pt, top=5pt, bottom=5pt % Margini interni
+}
 
-%\pagestyle{plain}
+% Comando per aggiungere un watermark personalizzato al documento
+\newcommand{\WATERMARK}[1]
+{%
+	\usepackage{draftwatermark}  % Carica il pacchetto per il watermark
+	\SetWatermarkText{#1}        % Imposta il testo del watermark
+	\SetWatermarkScale{4}        % Definisce la scala del watermark
+	\SetWatermarkAngle{60}       % Imposta l'angolo di inclinazione del watermark
+}
+
+% Comando per inserire un'immagine centrata con spaziatura sopra e sotto
+\newcommand{\IMG}[1]
+{
+	\vspace{1.5em}  % Aggiunge spazio sopra l'immagine
+	\centering\includegraphics[width=1\columnwidth]{#1} % Inserisce l'immagine a tutta larghezza
+	\vspace{1.5em}  % Aggiunge spazio sotto l'immagine
+}
+
+% Comando personalizzato per horizontal rule
+\newcommand{\HR} 
+{
+	\vspace{1.5em}  % Aggiunge spazio sopra l'immagine
+	\hrule
+	\vspace{1.5em}  % Aggiunge spazio sotto l'immagine
+}
+
+% Titolo principale
+\newcommand{\TITLE}[1]{\textsc{\LARGE #1}} 
+
+% Sottotitolo
+\newcommand{\SUBTITLE}[1]{\textsc{\Large #1}} 
+
