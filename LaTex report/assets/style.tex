@@ -1,7 +1,7 @@
 % Classe del documento
 \documentclass{article}
 
-
+\usepackage[a4paper,headsep=20pt, top=50pt, bottom=50pt, left=80pt, right=80pt, footskip=20pt]{geometry}
 
 % Pacchetto per generare testo segnaposto (Lorem Ipsum)
 \usepackage{lipsum}
@@ -28,11 +28,24 @@
 % Pacchetto per ridimensionare simboli matematici
 \usepackage{relsize}
 
+\usepackage{fancyhdr}			%used for head and foot settings
+
 % Pacchetti per gestire colori e creare box colorati
 \usepackage{xcolor}     % Definizione e uso di colori personalizzati
 \usepackage{tcolorbox}  % Creazione di box colorati per evidenziare contenuti
 
+% Pacchetto per evidenziare il testo
+\usepackage{soul} 
+\sethlcolor{red}
 
+
+\fancypagestyle{plain}{
+	\fancyhead{}
+	\fancyfoot{}
+	\fancyhead[L]{Vici Francesco}
+	\fancyhead[R]{Laboratorio di Algoritmi e Strutture Dati}
+	\fancyfoot[C]{\thepage}
+}
 
 % Definizione del percorso alla cartella immagini
 \graphicspath{{assets/images/}}
@@ -56,7 +69,7 @@
 % Ambiente personalizzato per una lista descrittiva senza spaziature aggiuntive
 \newenvironment{DESCRIPTION}
 {
-	\begin{description}[topsep=0pt, itemsep=0pt, partopsep=0pt, parsep=0pt]
+	\begin{description}
 }
 {
 	\end{description}
@@ -66,7 +79,7 @@
 \newenvironment{DESC}[1]
 {
 	\setlist[description,1]{leftmargin=2em + (2em * #1), labelindent=0em + (2em * #1)}
-	\begin{description}[topsep=0pt, itemsep=0pt, partopsep=0pt, parsep=0pt]
+	\begin{description}
 }
 {
 	\end{description}
@@ -130,4 +143,8 @@
 
 % Sottotitolo
 \newcommand{\SUBTITLE}[1]{\textsc{\Large #1}} 
+
+
+
+\pagestyle{plain}
 
