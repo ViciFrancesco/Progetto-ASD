@@ -1,150 +1,134 @@
-% Classe del documento
-\documentclass{article}
-
 \usepackage[a4paper,headsep=20pt, top=50pt, bottom=50pt, left=80pt, right=80pt, footskip=20pt]{geometry}
 
-% Pacchetto per generare testo segnaposto (Lorem Ipsum)
-\usepackage{lipsum}
+% Pacchetti utili
+\usepackage{lipsum}         % Testo segnaposto (Lorem Ipsum)
+\usepackage{listings}       % Evidenziazione codice sorgente
+\usepackage{amsfonts}       % Font matematici aggiuntivi
+\usepackage{amsmath}        % Ambienti ed estensioni per la matematica
+\usepackage{enumitem}       % Personalizzazione elenchi numerati e puntati
+\usepackage{bm}             % Grassetto nei simboli matematici
+\usepackage{calc}           % Operazioni matematiche su lunghezze e dimensioni
+\usepackage{graphicx}       % Gestione immagini e grafica
+\usepackage{relsize}        % Ridimensionamento simboli matematici
+\usepackage{fancyhdr}       % Personalizzazione intestazioni e piedi di pagina
+\usepackage{xcolor}         % Definizione e uso di colori personalizzati
+\usepackage{tcolorbox}      % Creazione di box colorati per evidenziare contenuti
+\usepackage{soul}           % Evidenziazione testo
+\sethlcolor{yellow}            % Imposta il colore dell'evidenziazione
 
-% Pacchetto per evidenziare codice sorgente
-\usepackage{listings}
-
-% Pacchetti per la matematica avanzata (font e simboli)
-\usepackage{amsfonts}  % Font matematici aggiuntivi
-\usepackage{amsmath}   % Ambienti ed estensioni per la matematica
-
-% Pacchetto per personalizzare gli elenchi numerati e puntati
-\usepackage{enumitem}
-
-% Pacchetto per il grassetto nei simboli matematici
-\usepackage{bm}
-
-% Pacchetto per operazioni matematiche su lunghezze e dimensioni
-\usepackage{calc}
-
-% Pacchetto per gestire immagini e grafica
-\usepackage{graphicx}
-
-% Pacchetto per ridimensionare simboli matematici
-\usepackage{relsize}
-
-\usepackage{fancyhdr}			%used for head and foot settings
-
-% Pacchetti per gestire colori e creare box colorati
-\usepackage{xcolor}     % Definizione e uso di colori personalizzati
-\usepackage{tcolorbox}  % Creazione di box colorati per evidenziare contenuti
-
-% Pacchetto per evidenziare il testo
-\usepackage{soul} 
-\sethlcolor{red}
-
-
+% Impostazioni dell'intestazione e del piè di pagina
 \fancypagestyle{plain}{
 	\fancyhead{}
 	\fancyfoot{}
 	\fancyhead[L]{Vici Francesco}
 	\fancyhead[R]{Laboratorio di Algoritmi e Strutture Dati}
-	\fancyfoot[C]{\thepage}
+	\fancyfoot[C]{Pagina \thepage}
 }
 
-% Definizione del percorso alla cartella immagini
+% Percorso cartella immagini
 \graphicspath{{assets/images/}}
 
-
-
-\newenvironment{CENTER}
-{
-	\par
-	\centering
-	\setlength{\parskip}{10pt} % Imposta la spaziatura tra paragrafi
-	\noindent
-	%\Large  % Testo di dimensione grande
-}
-{
-	\par
-	\vspace{8pt} % Aggiunge spazio alla fine dell'ambiente
-	\normalsize  % Ripristina la dimensione normale del testo
+% Ambiente per centratura con spaziatura personalizzata
+\newenvironment{CENTER}{
+	\par\centering\setlength{\parskip}{10pt}\noindent
+}{
+	\par\vspace{8pt}\normalsize
 }
 
-% Ambiente personalizzato per una lista descrittiva senza spaziature aggiuntive
-\newenvironment{DESCRIPTION}
-{
+% Ambiente per descrizioni senza spaziature aggiuntive
+\newenvironment{DESCRIPTION}{
 	\begin{description}
-}
-{
+	}{
 	\end{description}
 }
 
-% Variante di DESC con parametro per la gestione del margine sinistro
-\newenvironment{DESC}[1]
-{
+% Variante di DESCRIPTION con margine personalizzabile
+\newenvironment{DESC}[1]{
 	\setlist[description,1]{leftmargin=2em + (2em * #1), labelindent=0em + (2em * #1)}
 	\begin{description}
-}
-{
+	}{
 	\end{description}
 }
 
-% Ambiente per una coppia di minipage con testo allineato in alto a sinistra
-\newenvironment{MINIBOX}
-{
+% Minipage per layout con testo allineato a sinistra o destra
+\newenvironment{MINIBOX}{
 	\begin{minipage}[t]{0.45\textwidth}
-}
-{
+	}{
 	\end{minipage}
 }
 
-\newenvironment{MINIBOX-RIGHT}
-{
+\newenvironment{MINIBOX-RIGHT}{
 	\begin{minipage}[t]{0.45\textwidth}
 		\begin{flushright}
-}
-{
+		}{
 		\end{flushright}
 	\end{minipage}
 }
 
-% Definizione dell'ambiente con bordo e sfondo personalizzati
+% Ambiente per tabelle con caption personalizzabile
+\newcommand{\tablecaption}{}
+\newenvironment{TABLE}[2]{
+	\begin{table}[h]
+		\centering
+		\renewcommand{\tablecaption}{#2}  % Salva il secondo parametro
+		\begin{tabular}{#1}
+			\hline
+		}{
+			\hline
+		\end{tabular}
+		\vspace{5pt}
+		\caption{\tablecaption}  % Usa il valore salvato
+		\label{tab:tabella}
+	\end{table}
+}
+
+\newenvironment{SIMPLETABLE}[1]{
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{#1}
+		}{
+		\end{tabular}
+		\label{tab:tabellasemplice}
+	\end{table}
+}
+
+% Box con bordo e sfondo personalizzati
 \newtcolorbox{GRAYBOX}{
-	colframe=gray,    % Bordo grigio scuro
-	colback=gray!10, % Sfondo grigio chiaro
-	boxrule=1pt,      % Spessore del bordo
-	arc=5pt,          % Arrotondamento angoli
-	left=5pt, right=5pt, top=5pt, bottom=5pt % Margini interni
+	colframe=gray, colback=gray!10,
+	boxrule=1pt, arc=5pt,
+	left=5pt, right=5pt, top=5pt, bottom=5pt
+}
+\newtcolorbox{ORANGEBOX}{
+	colframe=orange, colback=orange!8,
+	boxrule=1pt, arc=5pt,
+	left=5pt, right=5pt, top=5pt, bottom=5pt
 }
 
-% Comando per aggiungere un watermark personalizzato al documento
-\newcommand{\WATERMARK}[1]
-{%
-	\usepackage{draftwatermark}  % Carica il pacchetto per il watermark
-	\SetWatermarkText{#1}        % Imposta il testo del watermark
-	\SetWatermarkScale{4}        % Definisce la scala del watermark
-	\SetWatermarkAngle{60}       % Imposta l'angolo di inclinazione del watermark
+% Comando per watermark personalizzato
+\newcommand{\WATERMARK}[1]{
+	\usepackage{draftwatermark}
+	\SetWatermarkText{#1}
+	\SetWatermarkScale{4}
+	\SetWatermarkAngle{60}
 }
 
-% Comando per inserire un'immagine centrata con spaziatura sopra e sotto
-\newcommand{\IMG}[1]
-{
-	\vspace{1.5em}  % Aggiunge spazio sopra l'immagine
-	\centering\includegraphics[width=1\columnwidth]{#1} % Inserisce l'immagine a tutta larghezza
-	\vspace{1.5em}  % Aggiunge spazio sotto l'immagine
+% Inserimento immagine centrata
+\newcommand{\IMG}[1]{
+	\vspace{1.5em}
+	\centering\includegraphics[width=1\columnwidth]{#1}
+	\vspace{1.5em}
 }
 
-% Comando personalizzato per horizontal rule
-\newcommand{\HR} 
-{
-	\vspace{1.5em}  % Aggiunge spazio sopra l'immagine
+% Linea orizzontale con spaziatura personalizzata
+\newcommand{\HR}{
+	\vspace{1.5em}
 	\hrule
-	\vspace{1.5em}  % Aggiunge spazio sotto l'immagine
+	\vspace{1.5em}
 }
 
-% Titolo principale
-\newcommand{\TITLE}[1]{\textsc{\LARGE #1}} 
+% Comandi per titoli e sottotitoli
+\newcommand{\TITLE}[1]{\textsc{\LARGE #1}}
+\newcommand{\SUBTITLE}[1]{\textsc{\Large #1}}
 
-% Sottotitolo
-\newcommand{\SUBTITLE}[1]{\textsc{\Large #1}} 
-
-
-
+% Imposta lo stile di pagina
 \pagestyle{plain}
-
