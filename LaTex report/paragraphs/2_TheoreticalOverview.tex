@@ -7,33 +7,40 @@ L'algoritmo LCS, che sta per Longest Common Subsequence, consiste nel trovare la
 Esistono numerosi metodi per implementare l'algoritmo LCS. Quelli utilizzati in questo esperimento sono i seguenti:
 		
 		\begin{DESC}{1}
-			\item[\textbf{Versione con algoritmo 'Brute Force'}] $\rightarrow$ Genera tutte le possibili sottosequenze (di qualsiasi lunghezza) di una delle due stringhe date in input e verifica la loro presenza nell'altra stringa.
-			\item[\textbf{Versione ricorsiva}] $\rightarrow$ Scompone il problema iniziale in sottoproblemi più semplici, fino ad arrivare al caso base, ovvero quando una delle due stringhe ha lunghezza pari a zero.
-			\item[\textbf{Versione con memoization}] $\rightarrow$ Segue la stessa logica della versione ricorsiva, ma memorizza in una matrice i risultati dei sottoproblemi già risolti, evitando di ripetere calcoli già effettuati. Se per un dato input è già stata trovata una soluzione, questa viene riutilizzata senza ricalcolarla.
-			\item[\textbf{Versione bottom-up}] $\rightarrow$ Risolve il problema partendo dai casi più semplici (dimensione minima) e aumentando progressivamente la dimensione fino a risolvere il problema completo. La risoluzione avviene in maniera inversa rispetto alle altre versioni.
+			\item[\textbf{Versione con algoritmo 'Brute Force'}]: Genera tutte le possibili sottosequenze (di qualsiasi lunghezza) di una delle due stringhe date in input e verifica la loro presenza nell'altra stringa.
+			\item[\textbf{Versione ricorsiva}]: Scompone il problema iniziale in sottoproblemi più semplici, fino ad arrivare al caso base, ovvero quando una delle due stringhe ha lunghezza pari a zero.
+			\item[\textbf{Versione con memoization}]: Segue la stessa logica della versione ricorsiva, ma memorizza in una matrice i risultati dei sottoproblemi già risolti, evitando di ripetere calcoli già effettuati. Se per un dato input è già stata trovata una soluzione, questa viene riutilizzata senza ricalcolarla.
+			\item[\textbf{Versione bottom-up}]: Risolve il problema partendo dai casi più semplici (dimensione minima) e aumentando progressivamente la dimensione fino a risolvere il problema completo. La risoluzione avviene in maniera inversa rispetto alle altre versioni.
 		\end{DESC}
 	
-\begin{ORANGEBOX}
-		\subsection{Costi delle diverse implementazioni}
-	Ogni implementazione dell'algoritmo LCS ha un costo computazionale diverso, a seconda della strategia utilizzata per risolvere il problema. Qui di seguito vengono analizzati i principali costi associati alle diverse versioni dell'algoritmo:
+	\subsection{Costi delle diverse implementazioni}
+Ogni implementazione dell'algoritmo LCS ha un costo computazionale diverso, a seconda della strategia utilizzata per risolvere il problema. Qui di seguito vengono analizzati i principali costi associati alle diverse versioni dell'algoritmo:
 	
 	\begin{DESC}{1} 
-		\item[\textbf{Versione con algoritmo 'Brute Force'}] $\rightarrow$ Il costo computazionale di questa versione è molto elevato. Poiché vengono generate tutte le possibili sottosequenze di una stringa e verificate nella seconda stringa, il tempo di esecuzione è esponenziale. In particolare, se la lunghezza di una delle stringhe è $n$, il numero di sottosequenze generate è dell'ordine di $2^n$, rendendo il tempo di esecuzione $O(2^n)$.
-		\item[\textbf{Versione ricorsiva}] $\rightarrow$ La versione ricorsiva ha un costo computazionale di $O(2^{\min(n, m)})$, dove $n$ e $m$ sono le lunghezze delle due stringhe. Questo è dovuto alla ripetizione di calcoli su sottoproblemi simili, che possono portare a una grande inefficienza, soprattutto per stringhe di lunghezza maggiore.
-		\item[\textbf{Versione con memoization}] $\rightarrow$ L'uso della memoization migliora significativamente le prestazioni, riducendo il costo computazionale a $O(n \cdot m)$, dove $n$ e $m$ sono le lunghezze delle due stringhe. La memoization evita di calcolare più volte gli stessi sottoproblemi, memorizzando i risultati in una matrice, il che riduce drasticamente il numero di calcoli necessari rispetto alla versione ricorsiva senza memoization.
-		\item[\textbf{Versione bottom-up}] $\rightarrow$ La versione bottom-up ha anch'essa un costo di $O(n \cdot m)$, dove $n$ e $m$ sono le lunghezze delle due stringhe. La differenza principale rispetto alla versione con memoization è che in questa versione si costruisce la soluzione a partire dal caso base, riempiendo progressivamente una matrice con le soluzioni parziali. Questo approccio è generalmente più efficiente rispetto alla versione ricorsiva con memoization in termini di utilizzo della memoria.
+		\item[\textbf{Versione con algoritmo 'Brute Force'}]: Poiché vengono generate tutte le possibili sottosequenze di una stringa e verificate nella seconda stringa, il tempo di esecuzione è esponenziale. In particolare, se le due stringhe $X$ e $Y$ sono lunghe rispettivamente $n$ e $m$, si dovranno controllare tutti i caratteri di $X$ per ogni sottosequenza di $Y$, quindi il tempo di esecuzione complessivo sarà nell'ordine di $\Theta(n) \cdot \Theta(2^m) =\Theta(n \cdot 2^m)$.
+		\item[\textbf{Versione ricorsiva}]: La versione ricorsiva, mantiene il costo quadratico, infatti ha un costo computazionale di $\Theta(2^{\min(n, m)})$, dove $n$ e $m$ sono le lunghezze delle due stringhe $X$ e $Y$. Questo algoritmo infatti è abbastanza efficiente su stringhe di dimensioni molto diverse tra loro, mentre causa una notevole inefficienza se gli sono sottoposte stringhe di lunghezza simile, entrambe molto lunghe.
+		\item[\textbf{Versione con memoization}]: L'uso della memoization migliora significativamente le prestazioni, riducendo il costo computazionale a $\Theta(n \cdot m)$, dove $n$ e $m$ sono le lunghezze delle due stringhe $X$ e $Y$. La memoization evita di risolvere più volte gli stessi sottoproblemi, memorizzando i risultati in una matrice, il che riduce drasticamente il numero di calcoli necessari rispetto alla versione ricorsiva senza memoization.
+		\item[\textbf{Versione bottom-up}]: La versione bottom-up ha anch'essa un costo di $\Theta(n \cdot m)$, dove $n$ e $m$ sono le lunghezze delle due stringhe $X$ e $Y$. La differenza principale rispetto alla versione con memoization è che in questa versione si costruisce la soluzione a partire dal caso base, riempiendo progressivamente una matrice con le soluzioni parziali. Questo approccio è generalmente più efficiente rispetto alla versione ricorsiva con memoization in termini di utilizzo della memoria.
 	\end{DESC}
-	In generale, le versioni con memoization e bottom-up sono le più efficienti in termini di tempo, mentre la versione brute force è altamente inefficiente e viene solitamente utilizzata solo per scopi didattici o con stringhe di piccole dimensioni.
+In generale, le versioni con memoization e bottom-up sono le più efficienti in termini di tempo, mentre la versione brute force è altamente inefficiente e viene solitamente utilizzata solo per scopi didattici o con stringhe di piccole dimensioni.
 	
-	\subsection{Applicazioni dell'algoritmo LCS}
+	\newpage
 	
-	L'algoritmo LCS è ampiamente utilizzato in vari campi dell'informatica e della biologia computazionale. Le sue applicazioni includono:
+Di seguito una tabella riassuntiva con costi di tempo e memoria dei diversi algoritmi:
+	\begin{TABLE}{|l|c|c|}{Costi dei diversi algoritmi LCS}
+		\textbf{Algoritmo} & \textbf{Costo (tempo)} & \textbf{Costo (memoria)}\\
+		\hline
+		Brute force & $\Theta(n \cdot 2^m)$ & medium \\
+		Recursive & $\Theta(n \cdot 2^m)$ & low \\
+		Memoization & $\Theta(n \cdot 2^m)$ & high \\
+		Bottom-up & $\Theta(n \cdot 2^m)$ & low \\
+	\end{TABLE}
 	
-	\begin{itemize} 
-		\item \textbf{Confronto tra sequenze di DNA:} L'algoritmo viene utilizzato per identificare le regioni comuni tra sequenze di DNA, un problema importante in biologia per l'analisi di genomi simili. 
-		\item \textbf{Confronto di testi:} L'algoritmo è utilizzato per confrontare documenti di testo, identificando le sequenze comuni che possono essere utili in operazioni come il versionamento dei file o la verifica del plagio. 
-		\item \textbf{Riconoscimento di pattern:} In ambito software, LCS può essere utilizzato per il riconoscimento di pattern e la ricerca di somiglianze tra stringhe. 
-		\item \textbf{Compressione dei dati:} L'algoritmo può anche essere applicato in tecniche di compressione dei dati, dove la ricerca di sequenze comuni può aiutare a ridurre la ridondanza nei dati. 
-	\end{itemize}
-	L'algoritmo LCS, quindi, pur avendo un costo elevato in termini di risorse per stringhe di grandi dimensioni, rimane uno degli strumenti principali per affrontare problemi di confronto tra sequenze.
-\end{ORANGEBOX}
+	\newpage
+
+
+
+	
+	
+	
+

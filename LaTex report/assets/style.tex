@@ -68,7 +68,7 @@
 % Ambiente per tabelle con caption personalizzabile
 \newcommand{\tablecaption}{}
 \newenvironment{TABLE}[2]{
-	\begin{table}[h]
+	\begin{table}[ht]
 		\centering
 		\renewcommand{\tablecaption}{#2}  % Salva il secondo parametro
 		\begin{tabular}{#1}
@@ -78,7 +78,7 @@
 		\end{tabular}
 		\vspace{5pt}
 		\caption{\tablecaption}  % Usa il valore salvato
-		\label{tab:tabella}
+		\label{tab:tabella \thetable}
 	\end{table}
 }
 
