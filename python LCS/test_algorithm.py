@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 from LCS_types import LCS
 
 class TestLCS:
-    ####################################################################################################
+    #==================================================================================================
     #                                  Costruttore della classe 
-    ####################################################################################################
+    #==================================================================================================
     def __init__(self, scalingFactor, size, classToTest, printMemo = False):
         # Creazione dell'istanza della classe da creare
         self.instance = classToTest(scalingFactor)
@@ -20,9 +20,9 @@ class TestLCS:
         # Determina se il dizionario di MemoizationLCS viene stampato
         self.printMemo = printMemo     
 
-    ####################################################################################################
+    #==================================================================================================
     #                             Funzioni di test per gli algoritmi
-    ####################################################################################################
+    #==================================================================================================
 
     # Genera due stringhe randomiche della lunghezza data in input
     def generate_random_strings(self, size):
@@ -40,22 +40,13 @@ class TestLCS:
         if(isinstance(self.instance, LCS.Memoization.value) and self.printMemo == True):
             self.instance.print_memo()
     
-    ####################################################################################################
+    #==================================================================================================
     #                                   Generazione del grafico
-    ####################################################################################################
+    #==================================================================================================
 
     # Genera un fattore di scala per la funzione di andamento dell'algoritmo da testare
-    def GET_scaling_factor():
-        # N = 10**6
-        # start = time.perf_counter()
-        # x = 0
-        # for _ in range(N):
-        #     x += 1  # Operazione semplice
-        # end = time.perf_counter()
+    def get_scaling_factor():
 
-        # tempo_per_istruzione = (end - start)
-        # print(f"Tempo medio per istruzione: {tempo_per_istruzione:.10f} secondi")
-        # return tempo_per_istruzione
         return 1e-7
     
     # Stampa il grafico dei risultati dell'algoritmo testato

@@ -1,4 +1,5 @@
 from test_algorithm import TestLCS
+from compare_algorithms import CompareLCS
 import time
 
 from LCS_types import LCS
@@ -7,17 +8,22 @@ from LCS_types import LCS
 #                                  Parametri del test
 #==================================================================================================
     #
-    # PARAM. 1) Lunghezza massima delle stringhe su cui effettuare il test
+    # PARAM. 1) Variabile che consente di testare tutti gli algoritmi e stampare i risultati in un unico grafico
     #
-maxStringLenght = 600
+testAllAlgorithms = True
 
     #
-    # PARAM. 2) Algoritmo su cui si desidera eseguire il test
+    # PARAM. 2) Lunghezza massima delle stringhe su cui effettuare il test
+    #
+testSize = 600
+
+    #
+    # PARAM. 3) Algoritmo su cui si desidera eseguire il test
     #
 selectedAlgorithm = LCS.BruteForce
 
     #
-    # PARAM. 3) Variabile che consente di stampare il dizionario per la memoization
+    # PARAM. 4) Variabile che consente di stampare il dizionario per la memoization
     #
 printMemoDictionary = False
 
@@ -26,25 +32,45 @@ printMemoDictionary = False
 #==================================================================================================
 def main():
     # Ottenimento del fattore di scala della funzione dei tempi attesi
-    scale = TestLCS.GET_scaling_factor()
+    scale = TestLCS.get_scaling_factor()
 
-    # Inizializzazione del test 
-    test = TestLCS(scale, maxStringLenght, selectedAlgorithm.value, printMemoDictionary)
-    
-    # Ottenimento orario di partenza del test
-    startTest = time.time()
+    if(testAllAlgorithms):
+        compare = CompareLCS(testSize, scale)
 
-    # Esecuzione del test
-    test.test_algorithm()
+        # Ottenimento orario di partenza del test
+        startTest = time.time()
 
-    # Ottenimento orario di fine del test
-    endTest = time.time()
+        # Uniforma la lunghezza dei risultati
+        compare.standardize_results_length()  
 
-    # Stampa del tempo complessivo
-    print("Tempo di esecuzione totale:", endTest-startTest, "secondi")
+        # Ottenimento orario di fine del test
+        endTest = time.time()
 
-    # Stampa del grafico dei risultati del test
-    test.plot_results()
+        # Stampa del tempo complessivo
+        print("Tempo di esecuzione totale:", endTest-startTest, "secondi")
+
+        # Stampa del grafico dei risultati del test
+        compare.plot_results()  
+    else:
+        
+
+        # Inizializzazione del test 
+        test = TestLCS(scale, testSize, selectedAlgorithm.value, printMemoDictionary)
+        
+        # Ottenimento orario di partenza del test
+        startTest = time.time()
+
+        # Esecuzione del test
+        test.test_algorithm()
+
+        # Ottenimento orario di fine del test
+        endTest = time.time()
+
+        # Stampa del tempo complessivo
+        print("Tempo di esecuzione totale:", endTest-startTest, "secondi")
+
+        # Stampa del grafico dei risultati del test
+        test.plot_results()
     return True
 
 if __name__ == "__main__":
