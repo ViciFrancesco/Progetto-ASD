@@ -46,7 +46,7 @@ class BruteForceLCS:
             self.brute_force_LCS(X, Y)
             end=time.time()
             self.results["Brute Force LCS"].append(end-start)
-            self.set_expected_time(len(X))
+            self.set_expected_time((len(X)+len(Y))/2)
         else:
             self.set_no_results()
 

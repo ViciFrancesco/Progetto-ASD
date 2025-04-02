@@ -39,7 +39,7 @@ class RecursiveLCS:
             self.recursive_LCS(X, Y, len(X), len(Y))
             end=time.time()
             self.results["Recursive LCS"].append(end-start)
-            self.set_expected_time(len(X))
+            self.set_expected_time((len(X)+len(Y))/2)
         else:
             self.set_no_results()
 
