@@ -33,7 +33,7 @@ class TestLCS:
         for index in range(self.size-1):
             if index <= self.instance.maxSizeAllowed:
                 X, Y= self.generate_random_strings(index+1)
-                print("Esecuzione test con stringa di", index+1, "caratteri")
+                # print("Esecuzione test con stringa di", index+1, "caratteri")
                 self.instance.execute(X, Y)
 
         # Stampa il dizionario 'memo' della MemoizationLCS
@@ -46,7 +46,6 @@ class TestLCS:
 
     # Genera un fattore di scala per la funzione di andamento dell'algoritmo da testare
     def get_scaling_factor():
-
         return 1e-7
     
     # Stampa il grafico dei risultati dell'algoritmo testato

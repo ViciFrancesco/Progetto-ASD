@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from test_algorithm import TestLCS
 from LCS_types import LCS
 
+import pdb
+
 class CompareLCS:
     #==================================================================================================
     #                                  Costruttore della classe 
@@ -20,19 +22,15 @@ class CompareLCS:
             test = TestLCS(scale, size, lcs_type.value, False)
             test.test_algorithm()  # Esecuzione del test
             
-            # Estrazione dei risultati del test
-            # self.results.append(copy.deepcopy(test.result[0]))
-            
-            # if index % 2 == 0:
-            #     self.results.append(copy.deepcopy(test.result[1]))
             keys = list(test.instance.results.keys()) 
 
             self.results[lcs_type.name] = copy.deepcopy(test.instance.results[keys[0]])
-            if index % 2 == 0:
-                if(index==0):
+            if index % 2 == 1:
+                if(index==1):
                     self.results['Exponential Curve'] = copy.deepcopy(test.instance.results[keys[1]])
                 else: 
                     self.results['Quadratic Curve'] = copy.deepcopy(test.instance.results[keys[1]])
+
     #==================================================================================================
     #                                     Funzioni ausiliarie
     #==================================================================================================
@@ -42,15 +40,24 @@ class CompareLCS:
         maxLength = 0
         
         # Trova la lunghezza massima tra i risultati
-        for result in self.results:
-            if len(result) > maxLength:
-                maxLength = len(result)
+        for index, lcs_type in enumerate(LCS):
+            if len(self.results[lcs_type.name]) > maxLength:
+                maxLength = len(self.results[lcs_type.name])
+                print(maxLength)
         
         # Estende i risultati più corti con valori NaN
-        for result in self.results:
-            if len(result) < maxLength:
-                for index in range(len(result), maxLength):
-                    result[index].append(np.nan)
+        for lcs_type in LCS:
+            if len(self.results[lcs_type.name]) < maxLength:
+                for index in range(len(self.results[lcs_type.name]), maxLength):
+                    self.results[lcs_type.name].append(np.nan)
+        
+        if len(self.results['Exponential Curve']) < maxLength:
+            for index in range(len(self.results['Exponential Curve']), maxLength):
+                self.results['Exponential Curve'].append(np.nan)
+
+        if len(self.results['Quadratic Curve']) < maxLength:
+            for index in range(len(self.results['Quadratic Curve']), maxLength):
+                self.results['Quadratic Curve'].append(np.nan)
         
         return maxLength
     

@@ -20,7 +20,7 @@ testSize = 600
     #
     # PARAM. 3) Algoritmo su cui si desidera eseguire il test
     #
-selectedAlgorithm = LCS.BruteForce
+selectedAlgorithm = LCS.Memoization
 
     #
     # PARAM. 4) Variabile che consente di stampare il dizionario per la memoization
@@ -41,7 +41,7 @@ def main():
         startTest = time.time()
 
         # Uniforma la lunghezza dei risultati
-        compare.standardize_results_length()  
+        resultLength = compare.standardize_results_length()  
 
         # Ottenimento orario di fine del test
         endTest = time.time()
@@ -50,10 +50,8 @@ def main():
         print("Tempo di esecuzione totale:", endTest-startTest, "secondi")
 
         # Stampa del grafico dei risultati del test
-        compare.plot_results()  
+        compare.plot_results(resultLength)  
     else:
-        
-
         # Inizializzazione del test 
         test = TestLCS(scale, testSize, selectedAlgorithm.value, printMemoDictionary)
         

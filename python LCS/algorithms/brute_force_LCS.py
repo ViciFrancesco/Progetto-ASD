@@ -13,7 +13,7 @@ class BruteForceLCS:
             "Expected Times Function" : []}
         
         # Massima lunghezza delle stringhe in input
-        self.maxSizeAllowed = 25
+        self.maxSizeAllowed = 20
 
         # Fattore di scala (uguale per tutti gli algoritmi)
         self.scalingFactor = scalingFactor
