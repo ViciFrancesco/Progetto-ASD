@@ -10,7 +10,7 @@ from LCS_types import LCS
     #
     # PARAM. 1) Variabile che consente di testare tutti gli algoritmi e stampare i risultati in un unico grafico
     #
-testAllAlgorithms = True
+testAllAlgorithms = False
 
     #
     # PARAM. 2) Lunghezza massima delle stringhe su cui effettuare il test
