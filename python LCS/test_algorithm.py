@@ -79,12 +79,13 @@ class TestLCS:
         x_data = range(self.size) 
         y_data = self.results[self.lcsType.label]
 
-        y_fit = self.fit_function(x_data, y_data)   
-      
         plt.figure(figsize=(8, 5))
         plt.plot(x_data, y_data, marker='o', linestyle='', label=self.lcsType.label, color='blue')
-        plt.plot(x_data, y_fit, label=f"Fit esponenziale", color='green', linestyle='--')
         plt.plot(x_data, self.results[self.expectedTimes.label], linestyle='-', label=self.expectedTimes.label, color='red')
+
+        if(self.fitToCurve == True):
+            y_fit = self.fit_function(x_data, y_data)   
+            plt.plot(x_data, y_fit, label=f"Fit esponenziale", color='green', linestyle='--')
         
         plt.title("Confronto Algoritmi con Fit Esponenziale")
         plt.xlabel("Lunghezza delle stringhe")
@@ -94,26 +95,21 @@ class TestLCS:
         plt.show() 
 
     def fit_function(self, x, y, func_type="exponential"):
-        # Scegli la funzione di fitting
         if func_type == "exponential":
             func = exponential_function
         elif func_type == "quadratic":
             func = quadratic_function
         else:
             raise ValueError("Funzione di fitting non supportata")
-
-        # Trova la parte valida di y (prima dei nan)
+        
         valid_length = np.argmax(np.isnan(y)) if np.isnan(y).any() else len(y)
         x_valid = x[:valid_length]
         y_valid = y[:valid_length]
 
-        # Esegui il fit sulla parte valida
         popt, _ = curve_fit(func, x_valid, y_valid)
 
-        # Applica il modello alla parte valida
         y_fit_valid = func(x_valid, *popt)
 
-        # Ricostruisci array completo con np.nan in coda
         nan_tail = [np.nan] * (len(y) - valid_length)
         y_fit_full = np.concatenate([y_fit_valid, nan_tail])
 

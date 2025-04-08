@@ -20,8 +20,8 @@ class RecursiveLCS:
         if(testSize <= self.maxSizeAllowed):
             resultsAverage = 0
             for iteration in range(0, self.iterations, 1):
-                X = stringsList[2**iteration]
-                Y = stringsList[(2**iteration)+1]
+                X = stringsList[(2**iteration)-1]
+                Y = stringsList[2**iteration]
                 start = time.time()
                 self.recursive_LCS(X, Y, len(X), len(Y))
                 end=time.time()

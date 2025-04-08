@@ -5,7 +5,7 @@ from algorithms.brute_force_LCS import BruteForceLCS
 from algorithms.memoization_LCS import MemoizationLCS
 from algorithms.bottom_up_LCS import BottomUpLCS
 
-scale:float = 1e-4
+scale:float = 1e-7
 
 def exponential(x):
     return (2 ** x) * scale
