@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from test_algorithm import TestLCS
-from LCS_types import LCS
+from constants import LCS
 
 import pdb
 

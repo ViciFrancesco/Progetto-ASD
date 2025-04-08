@@ -1,25 +1,13 @@
 import time
 import numpy as np
 
-class RecursiveLCS:
-    #==================================================================================================
-    #                                  Costruttore della classe 
-    #==================================================================================================
-    def __init__(self, scalingFactor):
-        # Matrice dei risultati
-        self.results = {
-            "Recursive LCS": [],
-            "Expected Times Function" : []}
-        
-        # Massima lunghezza delle stringhe in input
-        self.maxSizeAllowed = 11
 
-        # Fattore di scala (uguale per tutti gli algoritmi)
-        self.scalingFactor = scalingFactor
-        
-    #==================================================================================================
-    #                                       Algoritmo principale 
-    #==================================================================================================  
+class RecursiveLCS:
+    def __init__(self, iterations, maxSize):
+        self.iterations=iterations
+        self.maxSizeAllowed = maxSize  
+        self.results = np.full((self.iterations, self.maxSizeAllowed), np.nan)
+    
     def recursive_LCS(self, X, Y, m, n):
         if m == 0 or n == 0:
             return 0
@@ -27,30 +15,45 @@ class RecursiveLCS:
             return 1 + self.recursive_LCS(X, Y, m - 1, n - 1)
         else:
             return max(self.recursive_LCS(X, Y, m, n - 1), self.recursive_LCS(X, Y, m - 1, n))
-    
-    #==================================================================================================
-    #                                     Funzioni di environment
-    #==================================================================================================
 
-    # Funzione wrapper che esegue l'algoritmo e salva i tempi di esecuzione nella matrice dei risultati
-    def execute(self, X, Y):
-        if(len(X) <= self.maxSizeAllowed and len(X) <= self.maxSizeAllowed):
-            start = time.time()
-            self.recursive_LCS(X, Y, len(X), len(Y))
-            end=time.time()
-            self.results["Recursive LCS"].append(end-start)
-            self.set_expected_time((len(X)+len(Y))/2)
+    def execute(self, stringsList, testSize):
+        if(testSize <= self.maxSizeAllowed):
+            resultsAverage = 0
+            for iteration in range(0, self.iterations, 1):
+                X = stringsList[2**iteration]
+                Y = stringsList[(2**iteration)+1]
+                start = time.time()
+                self.recursive_LCS(X, Y, len(X), len(Y))
+                end=time.time()
+                self.results[iteration][testSize-1]=end-start
+                resultsAverage += end-start
+            return resultsAverage/self.iterations
         else:
-            self.set_no_results()
+            return np.nan
+        
+    def print_results(self):
+        print(self.results)
 
-    # Crea la funzione dell'andamento dell'algoritmo
-    def set_expected_time(self, size):
-        self.results["Expected Times Function"].append((2 ** size)* self.scalingFactor)
 
-    # Imposta a NaN i tempi di esecuzione dell'algoritmo e del suo andamento
-    def set_no_results(self):
-        self.results["Recursive LCS"].append(np.nan)
-        self.results["Expected Times Function"].append(np.nan)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
