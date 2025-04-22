@@ -1,91 +1,110 @@
-import copy
 import numpy as np
 import matplotlib.pyplot as plt
 
+from constants import LCS, Functions, fit_function
 from test_algorithm import TestLCS
-from constants import LCS
 
-import pdb
-
+# Classe per confrontare tutti gli algoritmi LCS
 class CompareLCS:
-    #==================================================================================================
-    #                                  Costruttore della classe 
-    #==================================================================================================
-    def __init__(self, size, scale):
-        self.results = {}  # Dizionario per memorizzare i risultati dei test
+    def __init__(self, size, iterations, mustFit):
+        """
+        Inizializza la classe eseguendo i test per tutti gli algoritmi LCS
+        e memorizzando i risultati.
 
-        # Esecuzione del test per ogni tipo di LCS
-        for index, lcs_type in enumerate(LCS):
-            print('Indice:', index, '/ Chiave:', lcs_type.name, '/ Valore:', lcs_type.value)
-            
-            # Inizializzazione del test 
-            test = TestLCS(scale, size, lcs_type.value, False)
-            test.test_algorithm()  # Esecuzione del test
-            
-            keys = list(test.instance.results.keys()) 
+        Args:
+            size: Massima lunghezza delle stringhe da testare.
+            iterations: Numero di iterazioni per ogni test.
+            mustFit: Flag per attivare il fitting sui dati raccolti.
+        """
+        self.results = {}
+        self.size = size
+        self.fitToCurve = mustFit
 
-            self.results[lcs_type.name] = copy.deepcopy(test.instance.results[keys[0]])
-            if index % 2 == 1:
-                if(index==1):
-                    self.results['Exponential Curve'] = copy.deepcopy(test.instance.results[keys[1]])
-                else: 
-                    self.results['Quadratic Curve'] = copy.deepcopy(test.instance.results[keys[1]])
+        # Esegue i test su tutti gli algoritmi definiti nell'enum LCS
+        for alg in LCS:
+            test = TestLCS(alg, self.size, iterations)
+            test.test_algorithm()
 
-    #==================================================================================================
-    #                                     Funzioni ausiliarie
-    #==================================================================================================
-    
-    # Rende uniforme la lunghezza delle serie di risultati riempiendo con NaN gli array più corti.
+            # Salva i risultati ottenuti per ciascun algoritmo
+            self.results[alg.label] = test.results[alg.label]
+
+            # Aggiunge anche le curve teoriche di riferimento (una sola volta)
+            if alg == LCS.BruteForce:
+                self.results[Functions.Exponential.label] = test.results[Functions.Exponential.label]
+            if alg == LCS.BottomUp:
+                self.results[Functions.Quadratic.label] = test.results[Functions.Quadratic.label]
+
+        # Standardizza la lunghezza dei risultati per tutti gli algoritmi
+        maxLength = self.standardize_results_length()
+
+        # Mostra il grafico comparativo finale
+        self.plot_results(maxLength)
+
     def standardize_results_length(self):
-        maxLength = 0
-        
-        # Trova la lunghezza massima tra i risultati
-        for index, lcs_type in enumerate(LCS):
-            if len(self.results[lcs_type.name]) > maxLength:
-                maxLength = len(self.results[lcs_type.name])
-                print(maxLength)
-        
-        # Estende i risultati più corti con valori NaN
-        for lcs_type in LCS:
-            if len(self.results[lcs_type.name]) < maxLength:
-                for index in range(len(self.results[lcs_type.name]), maxLength):
-                    self.results[lcs_type.name].append(np.nan)
-        
-        if len(self.results['Exponential Curve']) < maxLength:
-            for index in range(len(self.results['Exponential Curve']), maxLength):
-                self.results['Exponential Curve'].append(np.nan)
+        """
+        Uniforma la lunghezza delle liste di risultati tra tutti gli algoritmi,
+        riempiendo con NaN dove necessario.
 
-        if len(self.results['Quadratic Curve']) < maxLength:
-            for index in range(len(self.results['Quadratic Curve']), maxLength):
-                self.results['Quadratic Curve'].append(np.nan)
-        
+        Returns:
+            La lunghezza massima tra le liste di risultati.
+        """
+        maxLength = 0
+
+        # Trova la lunghezza massima tra tutti i risultati degli algoritmi
+        for alg in LCS:
+            rawLength = len(self.results[alg.label])
+            if rawLength > maxLength:
+                maxLength = rawLength
+
+        # Riempi le liste più corte con NaN per uniformare la lunghezza
+        for alg in LCS:
+            rawLength = len(self.results[alg.label])
+            if rawLength < maxLength:
+                nan_tail = np.full(maxLength - rawLength, np.nan)
+                self.results[alg.label] = self.results[alg.label] + nan_tail
+
+        for func in Functions:
+            rawLength = len(self.results[func.label])
+            if rawLength < maxLength:
+                nan_tail = np.full(maxLength - rawLength, np.nan)
+                self.results[func.label] = self.results[func.label] + nan_tail
+
         return maxLength
-    
-    # Genera e visualizza un grafico comparativo tra le varie implementazioni di LCS
+
     def plot_results(self, maxLength):
-        keys = list(self.results.keys())  # Ottieni le chiavi dinamicamente
-        values = list(self.results.values())  # Ottieni i dati come liste
-        
-        if len(values) < 6:
-            raise ValueError("Il dizionario deve contenere almeno sei serie di dati!")
-        
-        # Controllo sulla lunghezza degli array
-        for value_set in values:
-            if len(value_set) != maxLength:
-                raise ValueError("Tutti gli array devono avere la stessa lunghezza")
-        
-        x = range(len(values[0]))  # Asse x (indice)
-        plt.figure(figsize=(8, 5))  # Imposta dimensioni del grafico
-        
-        # Plot dinamico per ogni serie nel dizionario
-        for index, key in enumerate(keys):
-            plt.plot(x, values[index], linestyle='-', label=key)
-        
-        # Miglioramenti estetici del grafico
-        plt.title("Confronto Algoritmi")
-        plt.xlabel("Lunghezza complessiva delle stringhe")
+        """
+        Crea un grafico che confronta i risultati dei vari algoritmi LCS
+        e li confronta con le curve teoriche.
+
+        Args:
+            maxLength: Lunghezza massima dei dati da plottare.
+        """
+        plt.figure(figsize=(8, 5))
+
+        # Plotta i risultati (con o senza fitting) per ogni algoritmo
+        for alg in LCS:
+            x_data = range(maxLength)
+            y_data = self.results[alg.label]
+
+            if self.fitToCurve:
+                y_fit = fit_function(x_data, y_data, alg)
+                plt.plot(x_data, y_fit, label=alg.label, linestyle='--', color=alg.color)
+            else:
+                plt.plot(x_data, y_data, label=alg.label, marker='o', linestyle='', color=alg.color)
+
+        # Plotta anche le curve teoriche di riferimento
+        for func in Functions:
+            x_data = range(maxLength)
+            y_data = self.results[func.label]
+
+            plt.plot(x_data, y_data, linestyle='-', label=func.label, color='red')
+
+        plt.title("Confronto Algoritmi LCS")
+        plt.xlabel("Lunghezza delle stringhe")
         plt.ylabel("Tempo di esecuzione")
         plt.legend()
         plt.grid(True)
-        
         plt.show()
+
+ 
+
